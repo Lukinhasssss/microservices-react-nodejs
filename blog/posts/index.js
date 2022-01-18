@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors')
-const { randomBytes } = require('crypto')
+const { randomBytes } = require('crypto');
+const { default: axios } = require("axios");
 
 const app = express()
 app.use(express.json())
@@ -14,11 +15,16 @@ app.get("/posts", (request, response) => {
   response.json(posts)
 })
 
-app.post('/posts', (request, response) => {
+app.post('/posts', async (request, response) => {
   const id = randomBytes(4).toString('hex')
   const { title } = request.body
 
   posts[id] = { id, title }
+
+  await axios.post('http://localhost:8090/events', {
+    type: 'PostCreated',
+    data: { id, title }
+  })
 
   response.status(201).json(posts[id])
 })
