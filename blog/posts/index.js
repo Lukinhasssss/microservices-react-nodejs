@@ -29,6 +29,12 @@ app.post('/posts', async (request, response) => {
   response.status(201).json(posts[id])
 })
 
+app.post('/events', (request, response) => {
+  console.log(`Received Event: ${request.body.type}`)
+
+  response.json({})
+})
+
 app.listen(port, () => {
   console.log(`Posts server is running on port: ${port}`)
 })

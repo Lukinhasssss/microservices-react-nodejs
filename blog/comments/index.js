@@ -38,6 +38,12 @@ app.post('/posts/:id/comments', async (request, response) => {
   response.status(201).json(comments)
 })
 
+app.post('/events', (request, response) => {
+  console.log(`Received Event: ${request.body.type}`)
+
+  response.json({})
+})
+
 app.listen(port, () => {
   console.log(`Comments server is running on port: ${port}`)
 })
