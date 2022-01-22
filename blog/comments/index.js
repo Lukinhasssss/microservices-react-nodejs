@@ -48,7 +48,7 @@ app.post('/events', async (request, response) => {
     const { postId, id, content, status } = data
     const comments = commentsByPostId[postId]
 
-    const comment = comment.find(comment => { return comment.id === id })
+    const comment = comments.find(comment => { return comment.id === id })
     comment.status = status
 
     await axios.post('http://localhost:8090/events', {

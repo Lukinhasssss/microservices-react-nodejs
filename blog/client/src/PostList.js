@@ -7,7 +7,7 @@ const PostList = () => {
   const [posts, setPosts] = useState({})
 
   const fetchPosts = async () => {
-    const response = await axios.get("http://localhost:808/posts")
+    const response = await axios.get("http://localhost:8082/posts")
 
     setPosts(response.data)
   }
