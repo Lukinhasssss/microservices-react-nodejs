@@ -1,5 +1,6 @@
-const express = require("express")
-const cors = require("cors")
+const express = require('express')
+const cors = require('cors')
+const axios = require('axios')
 
 const app = express()
 app.use(express.json())
@@ -9,13 +10,7 @@ const port = 8082
 
 const posts = {}
 
-app.get("/posts", (request, response) => {
-  response.json(posts)
-})
-
-app.post("/events", (request, response) => {
-  const { type, data } = request.body
-
+const handleEvent = (type, data) => {
   if (type === 'PostCreated') {
     const { id, title } = data
 
@@ -33,19 +28,39 @@ app.post("/events", (request, response) => {
     const { id, content, postId, status } = data
 
     const post = posts[postId]
-    const comment = post.comments.find(comment => {
+    const comment = post.comments.find((comment) => {
       return comment.id === id
     })
 
     comment.status = status
     comment.comments = content
   }
+}
 
-  console.log(posts)
+app.get('/posts', (request, response) => {
+  response.json(posts)
+})
+
+app.post('/events', (request, response) => {
+  const { type, data } = request.body
+
+  handleEvent(type, data)
 
   response.json({})
 })
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Query server is running on port: ${port}`)
+
+  try {
+    const response = await axios.get('http://localhost:8090/events')
+
+    response.data.forEach(event => {
+      console.log(`Processing event: ${event.type}`)
+
+      handleEvent(event.type, event.data)
+    })
+  } catch (error) {
+    console.log(error.message)
+  }
 })
