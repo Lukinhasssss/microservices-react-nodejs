@@ -53,7 +53,7 @@ app.listen(port, async () => {
   console.log(`Query server is running on port: ${port}`)
 
   try {
-    const response = await axios.get('http://localhost:8090/events')
+    const response = await axios.get('http://event-bus-service:8090/events')
 
     response.data.forEach(event => {
       console.log(`Processing event: ${event.type}`)

@@ -17,17 +17,17 @@ app.post('/events', (request, response) => {
     console.log(err.message)
   })
 
-  // axios.post('http://localhost:8081/events', event).catch(err => {
-  //   console.log(err.message)
-  // })
+  axios.post('http://comments-service:8081/events', event).catch(err => {
+    console.log(err.message)
+  })
 
-  // axios.post('http://localhost:8082/events', event).catch(err => {
-  //   console.log(err.message)
-  // })
+  axios.post('http://query-service:8082/events', event).catch(err => {
+    console.log(err.message)
+  })
 
-  // axios.post('http://localhost:8083/events', event).catch(err => {
-  //   console.log(err.message)
-  // })
+  axios.post('http://moderation-service:8083/events', event).catch(err => {
+    console.log(err.message)
+  })
 
   response.json({ status: 'OK' })
 })
