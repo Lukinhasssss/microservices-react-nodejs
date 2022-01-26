@@ -15,3 +15,18 @@ spec:
       containers:
         - name: posts
           image: lukinhasssss/posts
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-service
+spec:
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
