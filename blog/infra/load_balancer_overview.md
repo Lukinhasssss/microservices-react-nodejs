@@ -1,0 +1,4 @@
+- **Load Balancer Service:**
+  - Tells Kubernetes to reach out to its provider and provision a load balancer. Gets traffic in to a *single pod*
+- **Ingress** or **Ingress Controller:**
+  - A pod with a set of routing rules to a distribute traffic to other services
