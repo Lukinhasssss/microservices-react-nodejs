@@ -1,5 +1,8 @@
 import express from 'express'
 import { currentUserRouter } from './routes/current-user'
+import { signinRouter } from './routes/signin'
+import { signoutRouter } from './routes/signout'
+import { signupRouter } from './routes/signup'
 
 const app = express()
 app.use(express.json())
@@ -7,6 +10,9 @@ app.use(express.json())
 const port = 8080
 
 app.use(currentUserRouter)
+app.use(signinRouter)
+app.use(signoutRouter)
+app.use(signupRouter)
 
 app.listen(port, () => {
   console.log(`Auth server is running on port: ${port}`)
