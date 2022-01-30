@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
+import DatabaseConnectionError from '../errors/database-connection-error'
+import RequestValidationError from '../errors/request-validation-error'
 
 const router = express.Router()
 
@@ -15,9 +17,12 @@ router.post('/api/users/signup', [
   const errors = validationResult(request)
 
   if (!errors.isEmpty())
-    return response.status(400).json({ errors: errors.array() })
+    throw new RequestValidationError(errors.array())
 
   const { email, password } = request.body
+
+  console.log(`Creating user account with email: ${email}`)
+  throw new DatabaseConnectionError()
 
   console.log(`Signing up user with email: ${email}`)
   response.json({ message: 'User signed up successfully' })
