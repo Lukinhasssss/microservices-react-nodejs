@@ -13,7 +13,7 @@ router.post('/api/users/signup', [
     .trim()
     .isLength({ min: 8 })
     .withMessage('Password must have at least 8 characters'),
-], (request: Request, response: Response) => {
+], async (request: Request, response: Response) => {
   const errors = validationResult(request)
 
   if (!errors.isEmpty())
