@@ -38,6 +38,15 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 8
   }
+}, {
+  toJSON: {
+    transform (doc, ret) {
+      ret.id = ret._id
+      delete ret._id
+      delete ret.password
+      delete ret.__v
+    }
+  }
 })
 
 userSchema.pre('save', async function (done) {
